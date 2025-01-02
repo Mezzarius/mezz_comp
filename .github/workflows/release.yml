@@ -1,60 +1,74 @@
-# This is a basic workflow to help you get started with Actions
+name: Update module.json and Create Release
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "main" branch
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    tags:
+      - 'v*'
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  update-module-json:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
-      - name: Extract tag version number
-        id: get_version
-        uses: battila7/get-version-action@v2
+      - name: Update module.json
+        run: |
+          # Your script to update the module.json file
+          echo "{}" > module.json
 
-      - name: Echo tag output
-        run: echo ${{ steps.get_version.outputs.version-without-v }}
-        
-            # Substitute the Manifest and Download URLs in the module.json
-      - name: Substitute Manifest and Download Links For Versioned Ones
-        id: sub_manifest_link_version
-        uses: microsoft/variable-substitution@v1
+      - name: Commit changes
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add module.json
+          git commit -m "Update module.json"
+          git push
+
+  zip-files:
+    needs: update-module-json
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Zip files
+        run: |
+          zip -r module.zip packs module.json
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
         with:
-          files: 'module.json'
+          name: release-zip
+          path: module.zip
+
+  create-release:
+    needs: zip-files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: release-zip
+          path: .
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
         env:
-          version: ${{steps.get_version.outputs.version-without-v}}
-          manifest: https://github.com/${{github.repository}}/releases/latest/download/module.json
-          download: https://github.com/${{github.repository}}/releases/download/${{steps.get_version.outputs.version}}/module.zip
-
-    # Create a zip file with all files required by the module to add to the release
-      - run: zip -r ./module.zip module.json packs/
-    # Create a release for this specific version
-      - name: Update Release with Files
-        id: create_version_release
-        uses: ncipollo/release-action@v1
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         with:
-           allowUpdates: true # Set this to false if you want to prevent updating existing releases
-           name: ${{ github.event.release.name }}
-           draft: true
-           token: ${{ secrets.GITHUB_TOKEN }}
-           artifacts: './module.json, ./module.zip'
-           tag: ${{ github.event.release.tag_name }}
-           body: ${{ github.event.release.body }}
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./module.zip
+          asset_name: module.zip
+          asset_content_type: application/zip
