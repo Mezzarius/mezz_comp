@@ -21,7 +21,7 @@
       "type": "Item",
       "system": "dnd5e",
       "ownership": {
-        "PLAYER": "OBSERVER",
+        "PLAYER": "NONE",
         "ASSISTANT": "OWNER"
       }
     },
@@ -32,7 +32,7 @@
       "type": "Item",
       "system": "dnd5e",
       "ownership": {
-        "PLAYER": "OBSERVER",
+        "PLAYER": "NONE",
         "ASSISTANT": "OWNER"
       }
     },
@@ -43,7 +43,7 @@
       "type": "Actor",
       "system": "dnd5e",
       "ownership": {
-        "PLAYER": "OBSERVER",
+        "PLAYER": "NONE",
         "ASSISTANT": "OWNER"
       }
     },
@@ -54,7 +54,7 @@
       "type": "Scene",
       "system": "dnd5e",
       "ownership": {
-        "PLAYER": "OBSERVER",
+        "PLAYER": "NONE",
         "ASSISTANT": "OWNER"
       }
     }
@@ -72,7 +72,43 @@
       ]
     }
   ],
+<<<<<<< HEAD
   "url": "https://github.com/Mezzarius/mezz_comp,
   "manifest": "https://github.com/Mezzarius/mezz_comp/module.json",
   "download": "https://github.com/Mezzarius/mezz_comp/releases/download/v1.0.0/module.json"
 }
+=======
+  "relationships": {
+    "requires": [
+      {
+        "id": "autoanimations",
+        "type": "module",
+        "compatibility": {}
+      },
+      {
+        "id": "chris-premades",
+        "type": "module",
+        "compatibility": {}
+      },
+      {
+        "id": "gambits-premades",
+        "type": "module",
+        "compatibility": {}
+      },
+      {
+        "id": "midi-qol",
+        "type": "module",
+        "compatibility": {}
+      },
+      {
+        "id": "midi-item-showcase-community",
+        "type": "module",
+        "compatibility": {}
+      }
+    ]
+  },
+  "url": "https://github.com/${{github.repository}}",
+  "manifest": "https://github.com/${{github.repository}}/releases/latest/download/module.json",
+  "download": "https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.zip"
+}
+>>>>>>> ac8dc58e6423db61a7d88e8d23e69ffdbccc8dc8
