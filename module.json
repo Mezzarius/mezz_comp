@@ -72,7 +72,7 @@
       ]
     }
   ],
-  "url": "https://github.com/Mezzarius/mezz_comp,
+  "url": "https://github.com/Mezzarius/mezz_comp",
   "manifest": "https://github.com/Mezzarius/mezz_comp/releases/download/latest/module.json",
   "download": "https://github.com/Mezzarius/mezz_comp/releases/download/1.0.0/module.zip"
 }
