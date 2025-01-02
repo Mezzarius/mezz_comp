@@ -1,32 +1,10 @@
-name: Update module.json and Create Release
+name: Release
 
 on:
   push:
-    tags:
-      - 'v*'
-
+  
 jobs:
-  update-module-json:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Update module.json
-        run: |
-          # Your script to update the module.json file
-          echo "{}" > module.json
-
-      - name: Commit changes
-        run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
-          git add module.json
-          git commit -m "Update module.json"
-          git push
-
   zip-files:
-    needs: update-module-json
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -39,7 +17,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: release-zip
+          name: module-zip
           path: module.zip
 
   create-release:
@@ -49,8 +27,8 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v2
         with:
-          name: release-zip
-          path: .
+          name: module-zip
+          path: ./module.zip
 
       - name: Create Release
         id: create_release
