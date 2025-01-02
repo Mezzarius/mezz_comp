@@ -1,45 +1,78 @@
 name: Release Creation
 
+env:
+  # The URL used for the module's "Project URL" link on FoundryVTT's website.
+  project_url: "https://github.com/${{github.repository}}"
+
+  # A URL that will always point to the latest manifest.
+  # FoundryVTT uses this URL to check whether the current module version that
+  # is installed is the latest version. This URL should NOT change,
+  # otherwise FoundryVTT won't be able to perform this check.
+  latest_manifest_url: "https://github.com/${{github.repository}}/releases/latest/download/module.json"
+
+  # The URL to the module archive associated with the module release being
+  # processed by this workflow.
+  release_module_url: "https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.zip"
+
+
 on:
+  # Only run this workflow when a release is published.
   release:
     types: [published]
-
-permissions:
-  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
     steps:
-    - uses: actions/checkout@v2
-    - name: Extract tag version number
-      id: get_version
-      uses: battila7/get-version-action@v2
-    - name: Substitute Manifest and Download Links For Versioned Ones
+    - name: Checkout Repository
+    - uses: actions/checkout@v4
+    
+    - id: get_version
+      run: |
+        echo "VERSION=${GITHUB_REF_NAME#v}" >> $GITHUB_ENV
+      
+      
+    # Modify "module.json" with values specific to the release.
+    # Since the values for the "version" and "url" keys aren't known ahead of
+    # time, the manifest file in the repository is updated with these values.
+    #
+    # While this does modify the manifest file in-place, the changes are not
+    # commited to the repository, and only exist in the action's filesystem.
+    - name: Modify Module Manifest With Release-Specific Values
       id: sub_manifest_link_version
-      uses: microsoft/variable-substitution@v1
+      uses: restackio/update-json-file-action@2.1
       with:
-        files: 'module.json'
-      env:
-        version: ${{steps.get_version.outputs.version-without-v}}
-        url: https://github.com/${{github.repository}}
-        manifest: https://github.com/${{github.repository}}/releases/latest/download/module.json
-        download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.zip
-    - run: zip -r ./module.zip module.json README.md LICENSE styles/ scripts/ templates/ languages/ lib/ img/ packs/
-    - name: Create Release
-      id: create_release
-      uses: actions/create-release@v1
+        file: 'module.json'
+        fields: "{\"version\": \"${{env.VERSION}}\", \"url\": \"${{ env.project_url }}\", \"manifest\": \"${{ env.latest_manifest_url }}\", \"download\": \"${{ env.release_module_url }}\"}"
+        
+    - name: Create Module Archive
+      run: |
+        # Note that `zip` will only emit warnings when a file or directory
+        # doesn't exist, it will not fail.
+        zip                                    \
+          `# Options`                          \
+          --recurse-paths                      \
+          `# The name of the output file`      \
+           ./module.zip                        \
+          `# The files that will be included.` \
+          module.json                          \
+          packs/                               \
+        # Don't forget to add a backslash at the end of the line for any
+        # additional files or directories!
+        
+     # Update the GitHub release with the manifest and module archive files.
+    - name: Update Release With Files
+      id: create_version_release
+      uses: ncipollo/release-action@v1
       with:
-        tag_name: ${{ github.event.release.tag_name }}
-        release_name: ${{ github.event.release.name }}
+        allowUpdates: true
+        name: ${{ github.event.release.name }}
+        draft: ${{ github.event.release.unpublished }}
+        prerelease: ${{ github.event.release.prerelease }}
+        token: ${{ secrets.GITHUB_TOKEN }}
+        artifacts: './module.json, ./module.zip'
+        tag: ${{ github.event.release.tag_name }}
         body: ${{ github.event.release.body }}
-        draft: false
-        prerelease: false
-    - name: Upload Release Asset
-      id: upload-release-asset
-      uses: actions/upload-release-asset@v1
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./module.zip
-        asset_name: module.zip
-        asset_content_type: application/zip
