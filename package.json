@@ -1,4 +1,18 @@
 {
+  "name": "mezz-compendiums",
+  "version": "0.0.1",
+  "description": "Mezz's Compendiums to share amongst worlds."
+},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mezzarius/mezz_comp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mezzarius/mezz_comp/issues"
+  },
+  "homepage": "https://github.com/Mezzarius/mezz_comp#readme",
   "dependencies": {
     "semver": "^7.6.3"
   }
