@@ -38,7 +38,7 @@ jobs:
            # create a zip file with all files required by the module to add to the release
     - name: Zip files
       working-directory: ./
-      run: zip -r ./module.zip module.json img/ packs/
+      run: zip -r ./module.zip module.json img/ packs/ img/
       
     # Create a release for this specific version
     - name: Update Release with Files
