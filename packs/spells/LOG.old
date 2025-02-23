@@ -1,8 +1,15 @@
-2025/02/03-03:04:57.303668 7f3f9e7fc700 Recovering log #142
-2025/02/03-03:04:57.317691 7f3f9e7fc700 Delete type=0 #142
-2025/02/03-03:04:57.317756 7f3f9e7fc700 Delete type=3 #140
-2025/02/03-03:11:16.804586 7f3a75109700 Level-0 table #147: started
-2025/02/03-03:11:16.804634 7f3a75109700 Level-0 table #147: 0 bytes OK
-2025/02/03-03:11:16.807114 7f3a75109700 Delete type=0 #145
-2025/02/03-03:11:16.810614 7f3a75109700 Manual compaction at level-0 from '!folders!1BC6GuTGKH85qAU7' @ 72057594037927935 : 1 .. '!items.effects!zveF98aTE9VtDBq4.Z0VUoc72t335ye47' @ 0 : 0; will stop at (end)
-2025/02/03-03:11:16.810654 7f3a75109700 Manual compaction at level-1 from '!folders!1BC6GuTGKH85qAU7' @ 72057594037927935 : 1 .. '!items.effects!zveF98aTE9VtDBq4.Z0VUoc72t335ye47' @ 0 : 0; will stop at (end)
+2025/02/16-08:13:12.788508 7f057b7fe700 Recovering log #164
+2025/02/16-08:13:12.792423 7f057b7fe700 Delete type=3 #162
+2025/02/16-08:13:12.792479 7f057b7fe700 Delete type=0 #164
+2025/02/23-02:47:36.263691 7f00518ce700 Level-0 table #170: started
+2025/02/23-02:47:36.272239 7f00518ce700 Level-0 table #170: 138409 bytes OK
+2025/02/23-02:47:36.276995 7f00518ce700 Delete type=0 #168
+2025/02/23-02:47:36.292633 7f00518ce700 Manual compaction at level-0 from '!folders!1BC6GuTGKH85qAU7' @ 72057594037927935 : 1 .. '!items.effects!zveF98aTE9VtDBq4.Z0VUoc72t335ye47' @ 0 : 0; will stop at (end)
+2025/02/23-02:47:36.298497 7f00518ce700 Manual compaction at level-1 from '!folders!1BC6GuTGKH85qAU7' @ 72057594037927935 : 1 .. '!items.effects!zveF98aTE9VtDBq4.Z0VUoc72t335ye47' @ 0 : 0; will stop at '!items.effects!ej3ZylwVbYR4ehui.HH5YVjzxkwXpDZS0' @ 5075 : 1
+2025/02/23-02:47:36.298515 7f00518ce700 Compacting 1@1 + 1@2 files
+2025/02/23-02:47:36.357728 7f00518ce700 Generated table #171@1: 1258 keys, 1986955 bytes
+2025/02/23-02:47:36.357777 7f00518ce700 Compacted 1@1 + 1@2 files => 1986955 bytes
+2025/02/23-02:47:36.359190 7f00518ce700 compacted to: files[ 0 0 1 0 0 0 0 ]
+2025/02/23-02:47:36.359492 7f00518ce700 Delete type=2 #166
+2025/02/23-02:47:36.359936 7f00518ce700 Delete type=2 #170
+2025/02/23-02:47:36.382793 7f00518ce700 Manual compaction at level-1 from '!items.effects!ej3ZylwVbYR4ehui.HH5YVjzxkwXpDZS0' @ 5075 : 1 .. '!items.effects!zveF98aTE9VtDBq4.Z0VUoc72t335ye47' @ 0 : 0; will stop at (end)
