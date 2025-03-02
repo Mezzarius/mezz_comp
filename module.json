@@ -134,6 +134,6 @@
     }
   ],
   "url": "https://github.com/Mezzarius/mezz_comp",
-  "manifest": "https://github.com/Mezzarius/mezz_comp/releases/latest/download/module.json",
+  "manifest": "https://github.com/Mezzarius/mezz_comp/releases/download/module.json",
   "download": "https://github.com/Mezzarius/mezz_comp/releases/download/v1.2.2/module.zip"
 }
