@@ -1,7 +1,7 @@
 {
   "id": "compendiums",
   "title": "Mezz's D & D Compendium",
-  "version": "1.2.2",
+  "version": "1.2.6",
   "compatibility": {
     "minimum": "12",
     "verified": "12"
@@ -21,7 +21,7 @@
       "type": "Item",
       "system": "dnd5e",
       "ownership": {
-        "PLAYER": "NONE",
+        "PLAYER": "OBSERVER",
         "ASSISTANT": "OWNER"
       }
     },
@@ -32,7 +32,7 @@
       "type": "Item",
       "system": "dnd5e",
       "ownership": {
-        "PLAYER": "NONE",
+        "PLAYER": "OBSERVER",
         "ASSISTANT": "OWNER"
       }
     },
@@ -63,50 +63,61 @@
       "label": "Classes",
       "path": "packs/classes",
       "type": "Item",
+      "system": "dnd5e",
       "ownership": {
         "PLAYER": "OBSERVER",
         "ASSISTANT": "OWNER"
-      },
-      "system": "dnd5e"
+      }
     },
     {
       "name": "races",
       "label": "Races",
       "path": "packs/races",
       "type": "Item",
+      "system": "dnd5e",
       "ownership": {
         "PLAYER": "OBSERVER",
         "ASSISTANT": "OWNER"
-      },
-      "system": "dnd5e"
+      }
     },
     {
       "name": "feats",
       "label": "Feats",
       "path": "packs/feats",
       "type": "Item",
+      "system": "dnd5e",
       "ownership": {
         "PLAYER": "OBSERVER",
         "ASSISTANT": "OWNER"
-      },
-      "system": "dnd5e"
+      }
     },
     {
       "name": "actions",
       "label": "Actions",
       "path": "packs/actions",
       "type": "Item",
+      "system": "dnd5e",
       "ownership": {
         "PLAYER": "OBSERVER",
         "ASSISTANT": "OWNER"
-      },
-      "system": "dnd5e"
+      }
     },
     {
       "name": "bestiary",
       "label": "Bestiary",
       "path": "packs/bestiary",
       "type": "Actor",
+      "system": "dnd5e",
+      "ownership": {
+        "PLAYER": "NONE",
+        "ASSISTANT": "OWNER"
+      }
+    },
+    {
+      "name": "books",
+      "label": "Books",
+      "path": "packs/books",
+      "type": "JournalEntry",
       "ownership": {
         "PLAYER": "OBSERVER",
         "ASSISTANT": "OWNER"
@@ -128,12 +139,42 @@
         "feats",
         "races",
         "classes",
-        "actions"
+        "actions",
+	"books"
       ],
       "folders": []
     }
   ],
   "url": "https://github.com/Mezzarius/mezz_comp",
-  "manifest": "https://github.com/Mezzarius/mezz_comp/releases/download/module.json",
-  "download": "https://github.com/Mezzarius/mezz_comp/releases/download/v1.2.2/module.zip"
+  "manifest": "https://github.com/Mezzarius/mezz_comp/releases/latest/download/module.json",
+  "download": "https://github.com/Mezzarius/mezz_comp/releases/download/v1.2.6/module.zip",
+  "relationships": {
+    "requires": [
+      {
+        "id": "chris-premades",
+        "type": "module",
+        "compatibility": {}
+      },
+      {
+        "id": "gambits-premades",
+        "type": "module",
+        "compatibility": {}
+      },
+      {
+        "id": "magicitems",
+        "type": "module",
+        "compatibility": {}
+      },
+      {
+        "id": "midi-item-showcase-community",
+        "type": "module",
+        "compatibility": {}
+      },
+      {
+        "id": "midi-qol",
+        "type": "module",
+        "compatibility": {}
+      }
+    ]
+  }
 }
